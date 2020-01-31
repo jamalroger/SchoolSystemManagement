@@ -4,15 +4,15 @@
 
 # Screenshots 
 
-![alt text](./screenshots/i1.png)
+![screen](./screenshots/i1.png)
     
-![alt text](./screenshotsimg/i2.png)
+![screen](./screenshotsimg/i2.png)
 
-![alt text](./screenshots/i3.png)
+![screen](./screenshots/i3.png)
     
-![alt text](./screenshots/i4.png)
+![screen](./screenshots/i4.png)
     
-![alt text](./screenshots/i5.png)
+![screen](./screenshots/i5.png)
 
    
 
