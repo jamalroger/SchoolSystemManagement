@@ -165,6 +165,8 @@ public class Home extends JFrame {
 	}
 	
 	public String getFiliere(int code) throws SQLException {
+		
+	
 		 
 		 ResultSet res = ConnectionDB.excuteQuery("select lib from filiere where code="+code);
 			      res.next();

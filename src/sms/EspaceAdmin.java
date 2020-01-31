@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
@@ -294,8 +295,6 @@ public class EspaceAdmin extends JFrame {
 	 lblNewLabel_3.setBounds(328, 34, 98, 15);
 	 filierePanel.add(lblNewLabel_3);
 	 
-	
-	  	
 }
 
 	public void addJTextFieldComponentsForDepartement() {
@@ -336,17 +335,19 @@ public class EspaceAdmin extends JFrame {
 		  erorrDepartlabel.setForeground(Color.RED);
 		  erorrDepartlabel.setBounds(166, 27, 253, 15);
 		  departementPanel.add(erorrDepartlabel);
-		
-		JButton addDepartButton = new JButton("Ajouter");
+			// add departement
+		  JButton addDepartButton = new JButton("Ajouter");
 		  addDepartButton.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent arg0) {
 		  		try {
 					
 					boolean check = Validation.isAllEmptyDepartForm(DepartTextField.getText());
 		 			if(!check) {
+		 				
 		 				addDepart(DepartTextField.getText());
 		 				getDepartements();
 		 				erorrDepartlabel.setText("");
+		 				
 		 			}else {
 		 				
 		 				erorrDepartlabel.setText("erreurs les donnees sont incorect");
@@ -361,17 +362,25 @@ public class EspaceAdmin extends JFrame {
 		  
 		  addDepartButton.setBounds(255, 54, 117, 19);
 		  departementPanel.add(addDepartButton);
-		
+		  
+		// delete departement
 		  JButton btnNewButton_5 = new JButton("Suprimer");
 		  btnNewButton_5.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent arg0) {
 		  		int row = departTable.getSelectedRow();
 			    try {
 			    	
-					DeleteDepart(Integer.parseInt((String) departModel.getValueAt(row, 0)));
-					getDepartements();
+			    	if(row!=-1) {
+			    		DeleteDepart(Integer.parseInt((String) departModel.getValueAt(row, 0)));
+			    		getDepartements();
+			    		departModel.removeRow(row);
+			    	} else {
+			    		JOptionPane.showMessageDialog(null, "selectione une ligne");
+			    	}
+			    		
 					
-					departModel.removeRow(row);
+					
+					
 				} catch (SQLException e) {
 					
 					e.printStackTrace();
@@ -383,12 +392,14 @@ public class EspaceAdmin extends JFrame {
 		  
 		
 		  
-		  	JLabel ErrorFiliereLable = new JLabel("");
+		  	 JLabel ErrorFiliereLable = new JLabel("");
 			 ErrorFiliereLable.setForeground(Color.RED);
 			 ErrorFiliereLable.setBounds(33, 34, 254, 15);
 			 filierePanel.add(ErrorFiliereLable);
 			 
-		  JButton addFilButton = new JButton("Ajouter");
+			 
+			 // add filiere
+		    JButton addFilButton = new JButton("Ajouter");
 			 addFilButton.addActionListener(new ActionListener() {
 			 	public void actionPerformed(ActionEvent arg0) {
 			 		try {
@@ -412,9 +423,12 @@ public class EspaceAdmin extends JFrame {
 			 		
 			 	}
 			 });
+			 
+			 
 			 addFilButton.setBounds(22, 160, 117, 25);
 			 filierePanel.add(addFilButton);
 			 
+			 // delete filiere
 			 JButton btnSuprimer = new JButton("Suprimer");
 			 btnSuprimer.addActionListener(new ActionListener() {
 			 	public void actionPerformed(ActionEvent arg0) {
@@ -422,15 +436,23 @@ public class EspaceAdmin extends JFrame {
 			 		int row = filTable.getSelectedRow();
 		 		    try {
 		 		    	
-						DeleteFiliere(Integer.parseInt((String) filModel.getValueAt(row, 0)));
-						getAllfiliere();
-						filModel.removeRow(row);
+						
+						if(row!=-1) {
+							DeleteFiliere(Integer.parseInt((String) filModel.getValueAt(row, 0)));
+							getAllfiliere();
+							filModel.removeRow(row);  
+				    	} else {
+				    		JOptionPane.showMessageDialog(null, "selectione une ligne");
+				    	}
+						
 					} catch (SQLException e) {
 						
 						e.printStackTrace();
 					}
 			 	}
 			 });
+			 
+			 
 			 
 			 
 			 
@@ -444,17 +466,19 @@ public class EspaceAdmin extends JFrame {
 			 errorFormStudent.setBounds(27, 28, 322, 18);
 			 studentPanel.add(errorFormStudent);
 			 
+			 
+			  // add students
 			 JButton addStudentButton = new JButton("Ajouter");
 			 addStudentButton.addActionListener(new ActionListener() {
 			 	public void actionPerformed(ActionEvent arg0) {
-			 		
+			 		errorFormStudent.setText("");
 			 		try {
 			 			   ComboBoxItem item =(ComboBoxItem)filComboBox.getSelectedItem();
 			 			    boolean check = Validation.isAllEmptyStudentsForm(cneTextField.getText(), NomTextField.getText(), prenomTextField.getText(), item, telTextField.getText());
 			 			            if(!check) {
-			 			            
+			 			              
 			 			            	addStudent(cneTextField.getText(),prenomTextField.getText() , NomTextField.getText(),telTextField.getText(),item.getCode());
-			 			            	errorFormStudent.setText("");
+			 			            	
 			 			            }
 			 			            else {
 			 			            	
@@ -475,15 +499,21 @@ public class EspaceAdmin extends JFrame {
 			 
 			 
 			 
+			 
+			 // delete student
 			 JButton deletestudentButton = new JButton("Suprimer");
 			 deletestudentButton.addActionListener(new ActionListener() {
 			 	public void actionPerformed(ActionEvent arg0) {
 			 		int row = studentTable.getSelectedRow();
 			 		    try {
 			 		    	
-							DeleteStudent((String)studentModel.getValueAt(row, 0));
+							if(row!=-1) {
+								DeleteStudent((String)studentModel.getValueAt(row, 0));
+								studentModel.removeRow(row);
 							
-							studentModel.removeRow(row);
+					    	} else {
+					    		JOptionPane.showMessageDialog(null, "selectione une ligne");
+					    	}
 						} catch (SQLException e) {
 							
 							e.printStackTrace();
